@@ -29,7 +29,7 @@ body{color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;overflow-
 .back{position:absolute;top:28px;left:7vw;color:var(--deep);text-decoration:none;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;z-index:2;transition:color .2s,transform .3s}
 .back:hover{color:var(--ink);transform:translateX(-4px)}
 .eye{position:relative;margin:0 0 14px;font-weight:700;font-size:11px;letter-spacing:.32em;color:var(--sig);text-transform:uppercase}
-.intro h1{position:relative;margin:0;font-family:'Big Shoulders Display',Impact,sans-serif;font-weight:900;font-size:clamp(60px,12vw,170px);line-height:.86;text-transform:uppercase}
+.intro h1{position:relative;margin:0;font-family:'Big Shoulders Display',Impact,sans-serif;font-weight:900;font-size:clamp(48px,9.2vw,150px);line-height:.88;text-transform:uppercase}
 .intro h1 em{font-style:normal;color:var(--sig)}
 .ln{display:block;overflow:hidden;padding:.04em 0 .08em}
 .ch{display:inline-block;opacity:0;animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i)*28ms + 250ms)}
@@ -50,6 +50,7 @@ body{color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;overflow-
 .cap p{margin:16px 0 0;font-size:15px;color:var(--body);max-width:46ch;line-height:1.5}
 .count{position:absolute;right:7vw;top:13vh;font-family:'Big Shoulders Display',Impact,sans-serif;font-weight:900;font-size:clamp(80px,13vw,170px);line-height:.85;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums;pointer-events:none}
 .count span{display:inline-block}
+.count{transition:opacity .5s}.count.off{opacity:0}
 .count small{display:block;font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.3em;color:var(--mute);margin-top:14px;font-weight:700}
 .chno{position:absolute;left:7vw;top:13vh;display:flex;align-items:center;gap:14px;font-size:11px;font-weight:700;letter-spacing:.3em;color:var(--mute);text-transform:uppercase;pointer-events:none}
 .chno i{display:block;width:54px;height:1px;background:currentColor;opacity:.5}
@@ -92,7 +93,7 @@ body{color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;overflow-
 <section class="intro" id="intro">
   <a class="back" href="index.html">← Back to Rank Day</a>
   <p class="eye">Rank Day · Behind the scenes</p>
-  <h1 id="h1" aria-label="This time, we went earlier."><span class="ln">This time,</span><em class="ln">we went earlier.</em></h1>
+  <h1 id="h1" aria-label="This time we tried something new."><span class="ln">This time we tried</span><em class="ln">something new.</em></h1>
   <div class="ghost" id="ghost" aria-hidden="true">2026</div>
 </section>
 
@@ -111,7 +112,7 @@ body{color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;overflow-
     <div class="cap on"><small>01 · Counselling form</small><h2>2,000 filled the form</h2><p>New this cycle: we asked for the roll number before the exam, and counselling began from there.</p></div>
     <div class="cap"><small>02 · Who filled it</small><h2>1,470 Pro.<br>The rest free.</h2><p>Some free users, and some entries with wrong information in the form.</p></div>
     <div class="cap"><small>03 · Top 1000</small><h2>32 reached the top 1000</h2><p>We posted each one as soon as it came in.</p></div>
-    <div class="cap"><small>04 · The highest</small><h2>AIR 62</h2><p>Interviewed early. Good interaction on YT.</p></div>
+    <div class="cap"><small>04 · The highest rank</small><h2>Our best rank.</h2><p>AIR is All India Rank. Interviewed early, with great interaction on YT.</p></div>
   </div>
 </section>
 
@@ -158,9 +159,9 @@ const ru=new Float32Array(N),rv=new Float32Array(N);
 for(let i=0;i<N;i++){ru[i]=rnd();rv[i]=rnd()}
 const ph=new Float32Array(N);for(let i=0;i<N;i++)ph[i]=rnd()*TAU;
 /* ink-fleck streaks flying out of AIR 62 */
-const STREAKS=Array.from({length:150},()=>({a:rnd()*TAU,s:.22+rnd()*.5,p:rnd(),c:rnd()<.45}));
+const STREAKS=Array.from({length:36},()=>({a:rnd()*TAU,s:.22+rnd()*.5,p:rnd(),c:rnd()<.45}));
 /* wobbly contour rings (like ink spreading in water) */
-const RINGS=Array.from({length:7},(_,k)=>({r:.15+k*.045,ph:rnd()*TAU,f:2+Math.floor(rnd()*4),sp:(rnd()<.5?-1:1)*(.25+rnd()*.35)}));
+const RINGS=Array.from({length:2},(_,k)=>({r:.15+k*.045,ph:rnd()*TAU,f:2+Math.floor(rnd()*4),sp:(rnd()<.5?-1:1)*(.25+rnd()*.35)}));
 
 /* per-dot physics + last drawn position (for hit-testing) */
 const ox=new Float32Array(N),oy=new Float32Array(N),ovx=new Float32Array(N),ovy=new Float32Array(N);
@@ -200,7 +201,7 @@ function build(){
       const j=topSlot.get(i),inner=j%2===0,ang=j/32*TAU,rr=M*(inner?.2:.31);
       c3[i]={x:W/2+Math.cos(ang)*rr,y:H*.44+Math.sin(ang)*rr*.92,r:Math.max(3.4,M*(inner?.0075:.006)),a:.95,c:INK};
     }
-    else c3[i]={x:c1[i].x,y:c1[i].y+H*.16,r:c1[i].r*.6,a:.05,c:c1[i].c};
+    else c3[i]={x:c1[i].x,y:c1[i].y+H*.16,r:c1[i].r*.6,a:.02,c:c1[i].c};
   }
   T=[c0,c1,c2,c3];
 }
@@ -437,13 +438,13 @@ function draw(now){
     const ax=px_[AIR],ay=py_[AIR];
     const pulse=1+.12*Math.sin(t*3.2);
     const g=ctx.createRadialGradient(ax,ay,0,ax,ay,M*.62*pulse);
-    g.addColorStop(0,rgba(SIG,.34*spK));g.addColorStop(.5,rgba(SIG,.1*spK));g.addColorStop(1,rgba(SIG,0));
+    g.addColorStop(0,rgba(SIG,.26*spK));g.addColorStop(.5,rgba(SIG,.07*spK));g.addColorStop(1,rgba(SIG,0));
     ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
 
     /* wobbly ink contours */
     ctx.lineWidth=1.2;
     RINGS.forEach((rg,k)=>{
-      const al=(.34-k*.035)*spK;
+      const al=(.16-k*.04)*spK;
       ctx.strokeStyle=rgba(k%2?DEEP:INK,al);
       wobble(ax,ay,M*rg.r*(1+.03*Math.sin(t*1.3+k)),.035+k*.006,rg.f,rg.f+2,rg.ph+t*rg.sp,t*.4,1,.92);
       ctx.stroke();
@@ -455,7 +456,7 @@ function draw(now){
       const u=(t*st.s*(red?.2:1)+st.p)%1,uu=u*u;
       const r0=M*.13+uu*M*1.15,len=6+uu*M*.38;
       const cs=Math.cos(st.a),sn=Math.sin(st.a);
-      ctx.strokeStyle=rgba(st.c?SIG:INK,spK*(1-u)*(st.c?.5:.3)*Math.min(1,u*8));
+      ctx.strokeStyle=rgba(st.c?SIG:INK,spK*(1-u)*(st.c?.28:.14)*Math.min(1,u*8));
       ctx.lineWidth=.6+u*1.8;
       ctx.beginPath();ctx.moveTo(ax+cs*r0,ay+sn*r0);ctx.lineTo(ax+cs*(r0+len),ay+sn*(r0+len));ctx.stroke();
     }
@@ -469,11 +470,11 @@ function draw(now){
       cg.addColorStop(1,rgba(SIG,0));
       /* a soft trailing wedge ending in a bright leading edge */
       const cg2=ctx.createConicGradient(sw-1.1,ax,ay);
-      cg2.addColorStop(0,rgba(SIG,0));cg2.addColorStop(.175,rgba(SIG,.34*spK));cg2.addColorStop(.1751,rgba(SIG,0));cg2.addColorStop(1,rgba(SIG,0));
+      cg2.addColorStop(0,rgba(SIG,0));cg2.addColorStop(.175,rgba(SIG,.12*spK));cg2.addColorStop(.1751,rgba(SIG,0));cg2.addColorStop(1,rgba(SIG,0));
       ctx.fillStyle=cg2;ctx.beginPath();ctx.arc(ax,ay,SR,0,TAU);ctx.fill();
     }
-    ctx.strokeStyle=rgba(DEEP,.55*spK);ctx.lineWidth=1.4;
-    ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax+Math.cos(sw)*SR,ay+Math.sin(sw)*SR);ctx.stroke();
+    ctx.strokeStyle=rgba(DEEP,.22*spK);ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.moveTo(ax+Math.cos(sw)*M*.12,ay+Math.sin(sw)*M*.12);ctx.lineTo(ax+Math.cos(sw)*SR,ay+Math.sin(sw)*SR);ctx.stroke();
     /* light up orbit dots as the sweep crosses them */
     for(let j=0;j<32;j++){
       const i=topList[j];if(i===AIR)continue;
@@ -604,44 +605,16 @@ function draw(now){
 
     /* orbit tracks */
     ctx.lineWidth=1;ctx.setLineDash([2,9]);ctx.lineDashOffset=t*14;
-    ctx.strokeStyle=rgba(INK,.3*spK);
+    ctx.strokeStyle=rgba(INK,.16*spK);
     ctx.beginPath();ctx.ellipse(ocx,ocy,M*.2,M*.2*.92,0,0,TAU);ctx.stroke();
     ctx.lineDashOffset=-t*14;
     ctx.beginPath();ctx.ellipse(ocx,ocy,M*.31,M*.31*.92,0,0,TAU);ctx.stroke();
     ctx.setLineDash([]);
 
-    /* constellation: live lines from the edge of the drop to every orbiting dot */
-    ctx.lineWidth=1;
-    for(let j=0;j<32;j++){
-      const i=topList[j];if(i===AIR)continue;
-      const ang=Math.atan2(py_[i]-by,px_[i]-bx),sx=bx+Math.cos(ang)*dropR*1.04,sy=by+Math.sin(ang)*dropR*1.04;
-      const flick=.16+.14*Math.sin(t*3+j*.8)+.5*flash[j];
-      ctx.strokeStyle=rgba(DEEP,Math.min(1,flick)*spK);
-      ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(px_[i],py_[i]);ctx.stroke();
-    }
-
-    /* data packets travelling from the orbit into the drop */
-    for(let j=0;j<32;j++){
-      const i=topList[j];if(i===AIR)continue;
-      const u=(t*.45+j*.173)%1,e2=1-Math.pow(1-u,2);
-      const qx=px_[i]+(bx-px_[i])*e2,qy=py_[i]+(by-py_[i])*e2;
-      if(Math.hypot(qx-bx,qy-by)<dropR)continue;
-      ctx.fillStyle=rgba(DEEP,(1-u)*.9*spK);
-      ctx.beginPath();ctx.arc(qx,qy,1.6+(1-u)*1.6,0,TAU);ctx.fill();
-    }
-
-    /* rotating tick dial */
-    const tr=M*.135;
-    for(let q=0;q<72;q++){
-      const an=q/72*TAU+t*.35,long=q%6===0,cs=Math.cos(an),sn=Math.sin(an),ln=long?M*.016:M*.008;
-      ctx.strokeStyle=rgba(INK,(long?.7:.32)*spK);ctx.lineWidth=long?1.6:1;
-      ctx.beginPath();ctx.moveTo(bx+cs*tr,by+sn*tr);ctx.lineTo(bx+cs*(tr+ln),by+sn*(tr+ln));ctx.stroke();
-    }
-
     /* dashed ring + expanding ripples */
     ctx.setLineDash([4,10]);ctx.lineDashOffset=-t*18;ctx.strokeStyle=rgba(DEEP,.8*spK);ctx.lineWidth=1.2;
     ctx.beginPath();ctx.arc(bx,by,M*.17,0,TAU);ctx.stroke();ctx.setLineDash([]);
-    for(let q=0;q<4;q++){const phs=(t*.5+q/4)%1;ctx.strokeStyle=rgba(SIG,(1-phs)*.6*spK);ctx.lineWidth=2;ctx.beginPath();ctx.arc(bx,by,M*.1+phs*M*.42,0,TAU);ctx.stroke()}
+    for(let q=0;q<2;q++){const phs=(t*.28+q/2)%1;ctx.strokeStyle=rgba(SIG,(1-phs)*.35*spK);ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(bx,by,dropR*1.1+phs*M*.2,0,TAU);ctx.stroke()}
 
     /* comet orbiting the dashed ring */
     for(let q=0;q<14;q++){
@@ -657,21 +630,24 @@ function draw(now){
       ctx.beginPath();ctx.arc(px_[i],py_[i],pr_[i]*(1.6+(1-flash[j])*3.4),0,TAU);ctx.stroke();
     }
 
-    /* 62 inside the drop */
+    /* "AIR" + 62 inside the drop */
     ctx.save();
-    ctx.font="900 "+Math.round(dropR*1.25)+"px 'Big Shoulders Display',Impact,sans-serif";
     ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillStyle=rgba(PALE,spK*.8);
+    ctx.font="700 "+Math.round(dropR*.17)+"px 'Space Grotesk',sans-serif";
+    if(ctx.letterSpacing!==undefined)ctx.letterSpacing=Math.round(dropR*.05)+'px';
+    ctx.fillText('AIR',bx,by-dropR*.55);
+    if(ctx.letterSpacing!==undefined)ctx.letterSpacing='0px';
     ctx.fillStyle=rgba(PALE,spK);
-    ctx.fillText('62',bx,by+dropR*.06);
+    ctx.font="900 "+Math.round(dropR*1.08)+"px 'Big Shoulders Display',Impact,sans-serif";
+    ctx.fillText('62',bx,by+dropR*.12);
     ctx.restore();
 
-    ctx.font="500 11px 'Space Grotesk',sans-serif";ctx.textAlign='center';ctx.textBaseline='alphabetic';ctx.fillStyle=rgba(INK,spK*.75);
-    ctx.fillText('ALL INDIA RANK',bx,by+M*.37);
   }
 
   /* click shockwaves */
   for(let k=shocks.length-1;k>=0;k--){
-    const sh=shocks[k],age=(now-sh.t)/1000;
+    const sh=shocks[k],age=Math.max(0,(now-sh.t)/1000);
     if(age>1.2){shocks.splice(k,1);continue}
     ctx.strokeStyle=rgba(SIG,(1-age/1.2)*.6);ctx.lineWidth=2.2*(1-age/1.2)+.4;
     ctx.beginPath();ctx.arc(sh.x,sh.y,age*M*.85,0,TAU);ctx.stroke();
@@ -697,7 +673,7 @@ function draw(now){
     lastIdx=idx;
     caps.forEach((el,i)=>el.classList.toggle('on',i===idx));
     dots.forEach((el,i)=>el.classList.toggle('on',i===idx));
-    clabel.textContent=labels[idx];
+    clabel.textContent=labels[idx];document.querySelector('.count').classList.toggle('off',idx===3);
     chno.textContent='Chapter 0'+(idx+1)+' / 04';
     setCount(counts[idx]);
     if(!first&&!red){
